@@ -14,8 +14,22 @@ def index():
 # Before starting, change the visibility of the port 5000 to Public so Postman can access the endpoints!
 
 # 1. Create an API with route /birthdays to display all the birthdays in the database
+@app.route("/birthdays", methods = ["GET", "POST"])
+def birthdays():
+    if request.method == "GET":
+        birthdays = execute_query("SELECT * FROM birthdays")
+        return birthdays 
+    elif request.method == "POST":
+        name = request.json["name"]
+        month = request.json["month"]
+        day = request.json["day"]
+        birthday = execute_query(f"INSERT INTO birthdays (name, month, day) VALUES ('{name}', {month}, {day})")
+        return "Birthday added successfully!"
+    
 
+    
 # 2. Using the same route, allow the user to add a birthday to the database
+
 
 # 3. Create an API with route /birthdays/count to count the number of birthdays in the database
 
